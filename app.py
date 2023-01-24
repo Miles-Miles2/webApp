@@ -1,3 +1,13 @@
+
+#required assets:
+
+#assets/
+#negative.jpg - Image used in about
+#positive.jpg - Image used in about
+#featureized_data - CSV generated from scripts/featureizer_downloader.py
+#serviceAccount - Firebase credentials
+#Final_model.h5 - Model generated from src/train.py
+
 import streamlit as st
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -231,7 +241,18 @@ with tab2:
             im.save("assets/example.png")
 
             #showing the image
-            st.image(image1, "Uploaded Image")
+
+            column1, column2 = st.columns(2)
+
+            with column1:
+              st.subheader("Uploaded Image:")
+              st.image(image1)
+            with column2:
+              st.subheader("Enhanced Image")
+              image_enhancement("assets/example.png","assets/enhance.png",sigma_minimum = 0.5, sigma_maximum = 0.5, sigma_steps = 10)
+              st.image("assets/enhance.png")
+              st.markdown("*Note: This is with default settings. If you want to customize the settings, use the Image Enhancer tab.")
+
 
             #file details
             #to get the file information
@@ -248,7 +269,7 @@ with tab2:
 
             #image predicting
             response = prediction("Final_model.h5", image1)
-            st.subheader("This is a **{}**".format(response))
+            st.subheader("This is **{}**".format(response))
             #getting the image fectures and the image array
             data, img_array,_ = convert_test_data("assets/example.png")
 
@@ -325,11 +346,17 @@ with tab3:
         st.subheader("Please Upload an Image to Enhance it")
         #setting file uploader
         #you can change the label name as your preference
-        image1 = st.file_uploader(label="Upload an image",accept_multiple_files=False, help="Upload an image to Enhance it")
+        image1 = st.file_uploader(label="Upload an image",accept_multiple_files=False, help="Upload an image to show the cracks")
         if image1:
             #reading the image
             im = Image.open(image1)
             #save the image
+
+            st.subheader("About parameters:")
+            st.markdown("**Sigma Minimum:** Make model more sensitive and highlight smaller cracks")
+            st.markdown("**Sigma Maximim:** Highlights large cracks more")
+            st.markdown("**Sigma Steps:** Enhances effect of Sigma Maximim")
+
             im.save("assets/example1.png")
             #header saying tune the parameter
             st.subheader("Tune the parameters")

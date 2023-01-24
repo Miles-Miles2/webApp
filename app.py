@@ -354,8 +354,8 @@ with tab3:
 
             st.subheader("About parameters:")
             st.markdown("**Sigma Minimum:** Make model more sensitive and highlight smaller cracks")
-            st.markdown("**Sigma Maximim:** Highlights large cracks more")
-            st.markdown("**Sigma Steps:** Enhances effect of Sigma Maximim")
+            st.markdown("**Sigma Maximum:** Highlights large cracks more")
+            st.markdown("**Sigma Steps:** Enhances effect of Sigma Maximum")
 
             im.save("assets/example1.png")
             #header saying tune the parameter
